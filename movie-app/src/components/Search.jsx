@@ -10,9 +10,20 @@ import React from 'react'
 // const {name, age, location} = person;
 // console.log(name) "Bevan Tan"
 
-const Search = (searchTerm, setSearchTerm) => {
+const Search = ({searchTerm, setSearchTerm}) => {
     return(
-        <div className="text-white text-3xl">{searchTerm}</div>
+    //      <div className="text-white text-3xl">{searchTerm}</div>
+        <div className = "search">
+            <div>
+                <img src="search.svg" alt="search" />
+                <input
+                    type="text"
+                    placeholder="Search through thousands of movies!"
+                    value={searchTerm}
+                    onChange = {(event) => setSearchTerm(event.target.value)}
+                    />
+            </div>
+        </div>
     )
 }
 
