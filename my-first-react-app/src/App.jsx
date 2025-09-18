@@ -1,16 +1,22 @@
-import { useState } from 'react'
+import { useState, useEffect} from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 const Card = ({title}) => {
+  const [count, setCount] = useState(0)
+
   const [hasLiked, setHasLiked] = useState(false); //destructure an array []
 
+  useEffect(() => {
+    console.log(`${title} has been liked: ${hasLiked}`);
+  }), [hasLiked]; //dependency array [hasLiked], only when this dependency is update the useEffect actions
+
   return (
-    <div className="card">
-      <h2>{title}</h2>
-      <button onClick={() => setHasLiked(true)}>
-        {hasLiked ? 'Linked':'Like'}
+    <div className="card" onClick={() => setCount(count + 1)}>
+      <h2>{title} <br/> {count || null}</h2>
+      <button onClick={() => setHasLiked(!hasLiked)}>
+        {hasLiked ? '❤️':'🤍'}
       </button>
     </div>
   )
