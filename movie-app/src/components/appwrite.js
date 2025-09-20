@@ -11,7 +11,7 @@ export const updateSearchCount = async (searchTerm, movie) => {
 
     const client = new Client()
     .setEndpoint(ENDPOINT)
-    .setProject(PROJECT_ID)
+    .setProject(PROJECT_ID);
 
     const database = new Databases(client);
 
@@ -38,6 +38,6 @@ export const updateSearchCount = async (searchTerm, movie) => {
                 })
         }
     } catch (error) {
-        
+
     }
 }
