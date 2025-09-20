@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import Search from './components/Search.jsx'
 import Spinner from './components/Spinner.jsx';
 import MovieCard from './components/MovieCard.jsx';
-import {useDebounce} from 'react-use'
+import { useDebounce } from 'react-use'
+import { updateSearchCount } from './components/appwrite.js';
+import { Databases } from 'appwrite';
 
 //API - Applicaiton Programming Interface - a set of rules that allows one software app to talk to another,
 
@@ -27,8 +29,8 @@ const App = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
 
   //debounce search term to prevent API request spam
-  //waiting 500ms
-  useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm])
+  //waiting 800ms
+  useDebounce(() => setDebouncedSearchTerm(searchTerm), 800, [searchTerm])
 
   const fetchMovies = async (query = '') => {
     setIsLoading(true);
@@ -59,6 +61,11 @@ const App = () => {
 
       //if response has been given back read the results from json file
       setMovieList(data.results)
+
+      // updateSearchCount();
+      if(query && data.results.length > 0) {
+        await updateSearchCount(query, data.results[0]);
+      }
 
     } catch (error) {
       console.error(`Error fetching movies: ${error}`)
