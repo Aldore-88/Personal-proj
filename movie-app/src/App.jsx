@@ -3,7 +3,7 @@ import Search from './components/Search.jsx'
 import Spinner from './components/Spinner.jsx';
 import MovieCard from './components/MovieCard.jsx';
 import { useDebounce } from 'react-use'
-import { updateSearchCount } from './components/appwrite.js';
+import { getTrendingMovies, updateSearchCount } from './components/appwrite.js';
 import { Databases } from 'appwrite';
 
 //API - Applicaiton Programming Interface - a set of rules that allows one software app to talk to another,
@@ -25,6 +25,7 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [movieList, setMovieList] = useState([]);
+  const [trendingMovies, setTrendingMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
 
@@ -75,10 +76,25 @@ const App = () => {
     }
   }
 
+  const loadTrendingMovies = async () => {
+    try{
+      const movies = await getTrendingMovies();
+
+      setTrendingMovies(movies);
+    } catch (error){
+      console.log(`Error fetching trending movies: ${error}`);
+      // setErrorMessage('Error fetching trending movies'); should not do this because we are stopping later
+      // on which will break our application if the trending doesnt work
+    }
+  }
+
   useEffect(() =>{
     fetchMovies(debouncedSearchTerm);
   }, [debouncedSearchTerm]);
 
+  useEffect( () => {
+    loadTrendingMovies();
+  }, [])
 
   return(
     <main>
@@ -94,12 +110,28 @@ const App = () => {
           <h1 className = "text-white">{searchTerm}</h1>
         </header>
 
+      {trendingMovies.length > 0 && (
+        <section className="trending">
+          <h2>Trending Movies</h2>
+
+          <ul>
+            {trendingMovies.map((movie, index) => (
+              <li key={movie.$id}>
+                <p>{index + 1}</p>
+                <img src={movie.poster_url} alt={movie.title} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       <section className = "all-movies">
-        <h2 className = "mt-[20px]">All Movies</h2>
+        <h2>All Movies</h2>
 
         {/* conditional rendering */}
         {/* {errorMessage && <p className = "text-red-500">{errorMessage}</p>} */}
 
+{/* if isLoading is true, else if there is an errorMessage, else display movieList.map */}
         {isLoading ? (
           // <p className='text-white'>Loading...</p>
           <Spinner/>

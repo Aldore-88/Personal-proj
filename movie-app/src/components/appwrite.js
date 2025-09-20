@@ -6,14 +6,14 @@ const COLLECTION_ID = import.meta.env.VITE_APPWRITE_COLLECTION_ID;
 const ENDPOINT = import.meta.env.VITE_APPWRITE_ENDPOINT;
 // const COLLECTION_ID = import.meta.env.VITE_APPWRITE_COLLECTION_ID; vid=1:49:46
 
+const client = new Client()
+.setEndpoint(ENDPOINT)
+.setProject(PROJECT_ID);
+
+const database = new Databases(client);
+
 export const updateSearchCount = async (searchTerm, movie) => {
     // console.log(PROJECT_ID, DATABASE_ID)
-
-    const client = new Client()
-    .setEndpoint(ENDPOINT)
-    .setProject(PROJECT_ID);
-
-    const database = new Databases(client);
 
     //1. Use Appwrite SDK to check if the search term exists in the database
     try {
@@ -34,10 +34,24 @@ export const updateSearchCount = async (searchTerm, movie) => {
                     searchTerm,
                     count: 1,
                     movie_id: movie.id,
-                    poster_url: `https://image.tmbd.org/t/p/w500${movie.poster_url}`,
+                    poster_url: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
                 })
         }
     } catch (error) {
+
+    }
+}
+
+export const getTrendingMovies = async() => {
+    try {
+        const result = await database.listDocuments(DATABASE_ID, COLLECTION_ID, [
+            Query.limit(5),
+            Query.orderDesc("count")
+        ])
+
+        return(result.documents);
+    } catch (error) {
+        console.log(error);
 
     }
 }
