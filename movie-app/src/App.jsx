@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Search from './components/Search.jsx'
 import Spinner from './components/Spinner.jsx';
+import MovieCard from './components/MovieCard.jsx';
 
 //API - Applicaiton Programming Interface - a set of rules that allows one software app to talk to another,
 
@@ -90,8 +91,9 @@ const App = () => {
           <p className = 'text-red-500'>{errorMessage}</p>
         ) : (
           <ul>
+            {/* destructured in MovieCard */}
             {movieList.map((movie) => (
-              <p key={movie.id} className = "text-white">{movie.title}</p>
+              <MovieCard key = {movie.id} movie={movie} />
             ))}
           </ul>
         )}
