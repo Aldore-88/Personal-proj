@@ -5,6 +5,7 @@ import MovieCard from './components/MovieCard.jsx';
 import { useDebounce } from 'react-use'
 import { getTrendingMovies, updateSearchCount } from './components/appwrite.js';
 import { Databases } from 'appwrite';
+import FloatingTopBar from './components/FloatingTopBar.jsx';
 
 //API - Applicaiton Programming Interface - a set of rules that allows one software app to talk to another,
 
@@ -38,10 +39,11 @@ const App = () => {
     setErrorMessage('');
 
     try {
-      const endpoint = query
       // encodeURI ensures that whatever character is put in it can process
+      const endpoint = query
         ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
         : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+      //awaits the fetch from the endpoint, which requires the API 'GET' with authorization key
       const response = await fetch(endpoint, API_OPTIONS);
 
       // alert(response);
@@ -98,6 +100,7 @@ const App = () => {
 
   return(
     <main>
+      <FloatingTopBar />
       <div className = "pattern" />
 
       <div className = "wrapper">
