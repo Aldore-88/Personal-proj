@@ -1,12 +1,21 @@
-# React + Vite
+# Movie Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+My first React-based application allowing for users to search and discover movies using the TMDB API, with trending movie tracking via Appwrite.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Search for movies using TheMovieDataBase(TMDB) API.
+- List of movies sorted by release date (newest first).
+- Tracks trending search queries in an Appwrite database.
+- Responsive trending list, depending on what has been searched for the most.
+- Responsive movie cards display depending on size of window.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend:** React, Vite, JSX
+- **Backend / API:** TMDB API (TheMovieDataBase)
+- **Database:** Appwrite (tracks trending searches)
+- **Deployment:** Vercel
+
+---
+Bevan Tan
