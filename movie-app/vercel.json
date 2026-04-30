@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/portfolio",
+      "destination": "portfolio-website-3w08iyo0x-bevans-projects-f3b37ebc.vercel.app"
+    },
+    {
+      "source": "/portfolio/:path*",
+      "destination": "portfolio-website-3w08iyo0x-bevans-projects-f3b37ebc.vercel.app/:path*"
+    }
+  ]
+}
